@@ -1,15 +1,36 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/kubernetes-helm-minikube
 {
-	"name": "Edge-Registry",
-	"dockerFile": "Dockerfile",
+	"name": "Kubernetes in Codespaces",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
 
-	// do not change these if you want Docker in Docker support
-	"runArgs": ["--init", "--privileged"],
-	"mounts": [ "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind" ],
-	"overrideCommand": false,
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+			"enableNonRootDocker": "true",
+			"moby": "false"
+		},
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+			"version": "latest",
+			"helm": "latest",
+			"minikube": "none"
+		},
+		"ghcr.io/devcontainers/features/dotnet:2": {
+			"version": "8.0"
+		},
+        "ghcr.io/devcontainers/features/azure-cli:1": {
+            "extensions": "connectedk8s,k8s-extension"
+        },
+		"ghcr.io/rio/features/k3d:1": {},
+		"ghcr.io/rio/features/k9s:1": {},
+		"ghcr.io/rio/features/kustomize:1": {}
+	},
 
 	// some base images require a specific user name
 	"remoteUser": "vscode",
 
+	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
 			// Set container specific settings
@@ -37,23 +58,23 @@
 	},
 
 	"hostRequirements": {
-		"cpus": 8
+		"cpus": 4
 	},
 
-	// forward ports for the app
-	"forwardPorts": [],
+	"secrets": {
+		"PAT": {
+			"description": "Your GitHub Personal Access Token"
+		}
+	},
 
-	// add labels
-	"portsAttributes": {},
+	"containerEnv": {
+		// Temporary fix until made default https://github.com/k3d-io/k3d/pull/1268#issuecomment-1745466499
+		"K3D_FIX_MOUNTS": "1"
+	},
 
-	"waitFor": "postCreateCommand",
+	"waitFor": "postStartCommand",
 
-	// Use 'onCreateCommand' to run commands as part of container creation.
-	"onCreateCommand": "/bin/bash -c .devcontainer/on-create.sh",
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "/bin/bash -c .devcontainer/post-create.sh",
-
-	// Use 'postStartCommand' to run commands after the container starts.
-	"postStartCommand": "/bin/bash -c .devcontainer/post-start.sh"
+	"onCreateCommand": "/bin/bash .devcontainer/onCreateCommand.sh",
+	"postCreateCommand": "/bin/bash .devcontainer/postCreateCommand.sh",
+	"postStartCommand": "/bin/bash .devcontainer/postStartCommand.sh"
 }
