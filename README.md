@@ -23,6 +23,35 @@ Edge Docker Registry
 
 ## Getting Started
 
+```bash
+
+# create local registry
+k3d registry create registry.localhost --port 5000
+
+# download heartbeat container
+docker pull ghcr.io/cse-labs/heartbeat:0.4.0
+
+# tag the container
+docker tag ghcr.io/cse-labs/heartbeat:0.4.0 registry.localhost:5000/heartbeat:0.4.0
+
+# push the container
+docker push registry.localhost:5000/heartbeat:0.4.0
+
+# Create cluster
+k3d cluster create \
+    --k3s-arg --disable=traefik@server:0 \
+    --registry-use k3d-registry.localhost:5000 \
+    -p 30080:30080@server:0 \
+    -p 80:80@loadbalancer
+
+# Deploy heartbeat
+kubectl apply -k ./heartbeat/base
+
+# Check heartbeat
+curl -i localhost/heartbeat/16
+
+```
+
 ## Support
 
 This project uses GitHub Issues to track bugs and feature requests. Please search the existing issues before filing new issues to avoid duplicates.  For new issues, file your bug or feature request as a new issue.
