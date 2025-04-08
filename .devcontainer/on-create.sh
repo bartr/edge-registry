@@ -9,6 +9,7 @@ sudo chsh --shell /bin/zsh vscode
     echo "alias kuse='kubectl config use-context'"
     echo ""
 
+    echo "export k3d_yaml=$PWD/.devcontainer/k3d.yaml"
     echo "export REPO_BASE=$PWD"
     echo "export REPO_FULL=\$(git remote get-url --push origin)"
     echo ""
@@ -30,16 +31,12 @@ kubectl completion zsh > "$HOME/.oh-my-zsh/completions/_kubectl"
 k3d completion zsh > "$HOME/.oh-my-zsh/completions/_k3d"
 #kustomize completion zsh > "$HOME/.oh-my-zsh/completions/_kustomize"
 
-echo "create local registry"
-docker network create k3d
-# k3d registry create registry.localhost --port 5500
-# docker network connect k3d k3d-registry.localhost
 
 #sudo apt-get update
 
 # only run apt upgrade on pre-build
-if [ "$CODESPACE_NAME" = "null" ]
-then
-    sudo apt-get update
-    sudo apt-get upgrade -y
-fi
+# if [ "$CODESPACE_NAME" = "null" ]
+# then
+#     sudo apt-get update
+#     sudo apt-get upgrade -y
+# fi

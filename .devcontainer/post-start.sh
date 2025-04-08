@@ -1,4 +1,4 @@
 #!/bin/bash
 
 echo "Pulling docker images"
-#docker pull mcr.microsoft.com/dotnet/sdk:7.0
+docker pull ghcr.io/cse-labs/heartbeat:0.4.0
