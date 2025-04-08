@@ -36,6 +36,8 @@ kustomize completion zsh > "$HOME/.oh-my-zsh/completions/_kustomize"
 
 # Create aliases
 mkdir -p "$HOME/.oh-my-zsh/customizations"
+mkdir -p "$HOME/.oh-my-zsh/custom"
+
 {
     echo "alias ipconfig='ip -4 a show eth0 | grep inet | sed \"s/inet//g\" | sed \"s/ //g\" | cut -d / -f 1'"
 

@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/kubernetes-helm-minikube
 {
-	"name": "Kubernetes in Codespaces",
+	"name": "Edge-Registry",
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
@@ -9,19 +9,19 @@
 	"features": {
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {
 			"enableNonRootDocker": "true",
-			"moby": "false"
+			"moby": "true"
 		},
 		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
 			"version": "latest",
 			"helm": "latest",
 			"minikube": "none"
 		},
-		"ghcr.io/devcontainers/features/dotnet:2": {
-			"version": "8.0"
-		},
-        "ghcr.io/devcontainers/features/azure-cli:1": {
-            "extensions": "connectedk8s,k8s-extension"
-        },
+		// "ghcr.io/devcontainers/features/dotnet:2": {
+		// 	"version": "8.0"
+		// },
+        // "ghcr.io/devcontainers/features/azure-cli:1": {
+        //     "extensions": "connectedk8s,k8s-extension"
+        // },
 		"ghcr.io/rio/features/k3d:1": {},
 		"ghcr.io/rio/features/k9s:1": {},
 		"ghcr.io/rio/features/kustomize:1": {}
